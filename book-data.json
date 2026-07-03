@@ -1,0 +1,993 @@
+{
+  "passageNumber": 40,
+  "title": "New Technologies in China",
+  "units": [
+    "第一单元 开始",
+    "第二单元 发展",
+    "第三单元 结尾"
+  ],
+  "pages": [
+    {
+      "image": "assets/images/00.png",
+      "en": "New Technologies in China",
+      "cn": "第 40 篇",
+      "unit": 1
+    },
+    {
+      "image": "assets/images/01.png",
+      "en": "Ethan is a member of the science club.",
+      "cn": "伊森是科学俱乐部的一名成员。",
+      "unit": 1
+    },
+    {
+      "image": "assets/images/02.png",
+      "en": "He has great knowledge about new technologies in China.",
+      "cn": "他非常了解中国的新技术。",
+      "unit": 1
+    },
+    {
+      "image": "assets/images/03.png",
+      "en": "Shared bikes are becoming popular.",
+      "cn": "共享单车正变得流行。",
+      "unit": 1
+    },
+    {
+      "image": "assets/images/04.png",
+      "en": "They are bringing cycling back to people's lives and are making people more active.",
+      "cn": "它们让骑行回到人们的生活中，并使人们更活跃。",
+      "unit": 1
+    },
+    {
+      "image": "assets/images/05.png",
+      "en": "My wallet is no longer used.",
+      "cn": "我的钱包不再被使用。",
+      "unit": 1
+    },
+    {
+      "image": "assets/images/06.png",
+      "en": "I don't need to carry money anymore.",
+      "cn": "我不再需要随身带钱。",
+      "unit": 2
+    },
+    {
+      "image": "assets/images/07.png",
+      "en": "I can buy whatever I want with my mobile phone as long as there is the Internet.",
+      "cn": "只要有互联网，我就可以用手机买任何我想要的东西。",
+      "unit": 2
+    },
+    {
+      "image": "assets/images/08.png",
+      "en": "All I need to do is scan a store's QR code and pay.",
+      "cn": "我需要做的只是扫描商店的二维码并付款。",
+      "unit": 2
+    },
+    {
+      "image": "assets/images/09.png",
+      "en": "Almost everyone who sells things is using Alipay.",
+      "cn": "几乎每个卖东西的人都在使用支付宝。",
+      "unit": 2
+    },
+    {
+      "image": "assets/images/10.png",
+      "en": "I don't need to go out and spend a lot of time seeking things I want.",
+      "cn": "我不需要出门花很多时间寻找想要的东西。",
+      "unit": 2
+    },
+    {
+      "image": "assets/images/11.png",
+      "en": "I can buy different kinds of things just at home.",
+      "cn": "我只在家里就可以买到各种各样的东西。",
+      "unit": 3
+    },
+    {
+      "image": "assets/images/12.png",
+      "en": "What's more, I can buy them cheaply.",
+      "cn": "而且，我可以便宜地买到它们。",
+      "unit": 3
+    },
+    {
+      "image": "assets/images/13.png",
+      "en": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away.",
+      "cn": "我曾有一次乘坐中国高铁从北京到天津旅行的经历，两地相距 100 多公里。",
+      "unit": 3
+    },
+    {
+      "image": "assets/images/14.png",
+      "en": "The journey takes only half an hour.",
+      "cn": "旅程只需半个小时。",
+      "unit": 3
+    }
+  ],
+  "dictionary": {
+    "a": {
+      "phonetic": "/ə/",
+      "translation": "一个；一"
+    },
+    "about": {
+      "phonetic": "/əˈbaʊt/",
+      "translation": "关于"
+    },
+    "active": {
+      "phonetic": "/ˈæktɪv/",
+      "translation": "积极的"
+    },
+    "alipay": {
+      "phonetic": "/ˈælɪpeɪ/",
+      "translation": "支付宝"
+    },
+    "all": {
+      "phonetic": "/ɔl/",
+      "translation": "全部"
+    },
+    "almost": {
+      "phonetic": "/ˈɔlˌmoʊst/",
+      "translation": "几乎"
+    },
+    "an": {
+      "phonetic": "/ən/",
+      "translation": "一个；一"
+    },
+    "and": {
+      "phonetic": "/ænd/",
+      "translation": "和"
+    },
+    "anymore": {
+      "phonetic": "/ˌɛniˈmɔr/",
+      "translation": "不再"
+    },
+    "are": {
+      "phonetic": "/ər/",
+      "translation": "是"
+    },
+    "as": {
+      "phonetic": "/æz/",
+      "translation": "作为；像"
+    },
+    "at": {
+      "phonetic": "/æt/",
+      "translation": "在；于"
+    },
+    "away": {
+      "phonetic": "/əˈweɪ/",
+      "translation": "离开"
+    },
+    "back": {
+      "phonetic": "/bæk/",
+      "translation": "后退"
+    },
+    "becoming": {
+      "phonetic": "/bɪˈkəmɪŋ/",
+      "translation": "成为"
+    },
+    "beijing": {
+      "phonetic": "/ˌbeɪˈdʒɪŋ/",
+      "translation": "北京"
+    },
+    "bike": {
+      "phonetic": "/baɪk/",
+      "translation": "自行车",
+      "cardId": "core-005"
+    },
+    "bikes": {
+      "phonetic": "/baɪks/",
+      "translation": "自行车"
+    },
+    "bringing": {
+      "phonetic": "/ˈbrɪŋɪŋ/",
+      "translation": "带来"
+    },
+    "buy": {
+      "phonetic": "/baɪ/",
+      "translation": "买"
+    },
+    "by": {
+      "phonetic": "/baɪ/",
+      "translation": "通过；在旁边"
+    },
+    "can": {
+      "phonetic": "/kən/",
+      "translation": "能"
+    },
+    "carry": {
+      "phonetic": "/ˈkɛri/",
+      "translation": "携带"
+    },
+    "cheaply": {
+      "phonetic": "/ˈtʃiːpli/",
+      "translation": "便宜地",
+      "cardId": "core-021"
+    },
+    "china": {
+      "phonetic": "/ˈʧaɪnə/",
+      "translation": "中国"
+    },
+    "chinese": {
+      "phonetic": "/ʧaɪˈniz/",
+      "translation": "中国人"
+    },
+    "club": {
+      "phonetic": "/kləb/",
+      "translation": "俱乐部"
+    },
+    "code": {
+      "phonetic": "/kəʊd/",
+      "translation": "代码；编码",
+      "cardId": "core-017"
+    },
+    "cycling": {
+      "phonetic": "/ˈsaɪklɪŋ/",
+      "translation": "骑自行车",
+      "cardId": "core-007"
+    },
+    "different": {
+      "phonetic": "/ˈdɪfərənt/",
+      "translation": "不同的"
+    },
+    "do": {
+      "phonetic": "/du/",
+      "translation": "做"
+    },
+    "dont": {
+      "phonetic": "/doʊnt/",
+      "translation": "不要"
+    },
+    "electronic": {
+      "phonetic": "/ɪˌlekˈtrɒnɪk/",
+      "translation": "电子的",
+      "cardId": "core-008"
+    },
+    "ethan": {
+      "phonetic": "/ˈiθən/",
+      "translation": "伊森"
+    },
+    "everyone": {
+      "phonetic": "/ˈɛvriˌwən/",
+      "translation": "每个人"
+    },
+    "experience": {
+      "phonetic": "/ɪkˈspɪəriəns/",
+      "translation": "经历；经验",
+      "cardId": "core-024"
+    },
+    "from": {
+      "phonetic": "/frʌm/",
+      "translation": "从"
+    },
+    "go": {
+      "phonetic": "/goʊ/",
+      "translation": "去"
+    },
+    "great": {
+      "phonetic": "/greɪt/",
+      "translation": "伟大的"
+    },
+    "had": {
+      "phonetic": "/hæd/",
+      "translation": "有"
+    },
+    "half": {
+      "phonetic": "/hɑːf/",
+      "translation": "一半",
+      "cardId": "core-026"
+    },
+    "has": {
+      "phonetic": "/həz/",
+      "translation": "有"
+    },
+    "he": {
+      "phonetic": "/hiː/",
+      "translation": "他"
+    },
+    "high": {
+      "phonetic": "/haɪ/",
+      "translation": "高的"
+    },
+    "home": {
+      "phonetic": "/hoʊm/",
+      "translation": "家"
+    },
+    "hour": {
+      "phonetic": "/aʊər/",
+      "translation": "小时"
+    },
+    "i": {
+      "phonetic": "/aɪ/",
+      "translation": "我"
+    },
+    "in": {
+      "phonetic": "/ɪn/",
+      "translation": "在……里"
+    },
+    "internet": {
+      "phonetic": "/ˈɪntənet/",
+      "translation": "互联网",
+      "cardId": "core-015"
+    },
+    "is": {
+      "phonetic": "/ɪz/",
+      "translation": "是"
+    },
+    "journey": {
+      "phonetic": "/ˈdʒɜːni/",
+      "translation": "旅程",
+      "cardId": "core-025"
+    },
+    "just": {
+      "phonetic": "/ʤɪst/",
+      "translation": "只是"
+    },
+    "kinds": {
+      "phonetic": "/kaɪnz/",
+      "translation": "种类"
+    },
+    "km": {
+      "phonetic": "/ˌkeɪ ˈem/",
+      "translation": "千米"
+    },
+    "knowledge": {
+      "phonetic": "/ˈnɒlɪdʒ/",
+      "translation": "知识；了解",
+      "cardId": "core-003"
+    },
+    "lives": {
+      "phonetic": "/lɪvz/",
+      "translation": "生活"
+    },
+    "long": {
+      "phonetic": "/lɔŋ/",
+      "translation": "长的"
+    },
+    "longer": {
+      "phonetic": "/ˈlɔŋgər/",
+      "translation": "更长"
+    },
+    "lot": {
+      "phonetic": "/lɔt/",
+      "translation": "很多"
+    },
+    "making": {
+      "phonetic": "/ˈmeɪkɪŋ/",
+      "translation": "制作"
+    },
+    "member": {
+      "phonetic": "/ˈmembə(r)/",
+      "translation": "成员",
+      "cardId": "core-001"
+    },
+    "mobile": {
+      "phonetic": "/ˈməʊbaɪl/",
+      "translation": "移动的",
+      "cardId": "core-013"
+    },
+    "money": {
+      "phonetic": "/ˈmʌni/",
+      "translation": "钱",
+      "cardId": "core-011"
+    },
+    "more": {
+      "phonetic": "/mɔr/",
+      "translation": "更多的"
+    },
+    "my": {
+      "phonetic": "/maɪ/",
+      "translation": "我的"
+    },
+    "need": {
+      "phonetic": "/nid/",
+      "translation": "需要"
+    },
+    "new": {
+      "phonetic": "/nu/",
+      "translation": "新的"
+    },
+    "no": {
+      "phonetic": "/noʊ/",
+      "translation": "不"
+    },
+    "of": {
+      "phonetic": "/əv/",
+      "translation": "……的"
+    },
+    "online": {
+      "phonetic": "/ˌɒnˈlaɪn/",
+      "translation": "在线的",
+      "cardId": "core-019"
+    },
+    "only": {
+      "phonetic": "/ˈoʊnli/",
+      "translation": "仅有的"
+    },
+    "out": {
+      "phonetic": "/aʊt/",
+      "translation": "出去"
+    },
+    "pay": {
+      "phonetic": "/peɪ/",
+      "translation": "支付",
+      "cardId": "core-018"
+    },
+    "payment": {
+      "phonetic": "/ˈpeɪmənt/",
+      "translation": "付款",
+      "cardId": "core-009"
+    },
+    "people": {
+      "phonetic": "/ˈpipəl/",
+      "translation": "人们"
+    },
+    "peoples": {
+      "phonetic": "/ˈpipəlz/",
+      "translation": "人民"
+    },
+    "phone": {
+      "phonetic": "/fəʊn/",
+      "translation": "电话",
+      "cardId": "core-014"
+    },
+    "popular": {
+      "phonetic": "/ˈpɒpjələ(r)/",
+      "translation": "受欢迎的",
+      "cardId": "core-006"
+    },
+    "qr": {
+      "phonetic": "/ˌkjuː ˈɑːr/",
+      "translation": "二维码缩写"
+    },
+    "railway": {
+      "phonetic": "/ˈreɪlweɪ/",
+      "translation": "铁路",
+      "cardId": "core-023"
+    },
+    "railways": {
+      "phonetic": "/ˈreɪlˌweɪz/",
+      "translation": "铁路"
+    },
+    "scan": {
+      "phonetic": "/skæn/",
+      "translation": "扫描",
+      "cardId": "core-016"
+    },
+    "science": {
+      "phonetic": "/ˈsaɪəns/",
+      "translation": "科学",
+      "cardId": "core-002"
+    },
+    "seek": {
+      "phonetic": "/siːk/",
+      "translation": "寻找",
+      "cardId": "core-020"
+    },
+    "seeking": {
+      "phonetic": "/ˈsikɪŋ/",
+      "translation": "寻求"
+    },
+    "sells": {
+      "phonetic": "/sɛlz/",
+      "translation": "卖"
+    },
+    "share": {
+      "phonetic": "/ʃeə(r)/",
+      "translation": "分享；合用",
+      "cardId": "core-004"
+    },
+    "shared": {
+      "phonetic": "/ʃɛrd/",
+      "translation": "共享"
+    },
+    "speed": {
+      "phonetic": "/spiːd/",
+      "translation": "速度",
+      "cardId": "core-022"
+    },
+    "spend": {
+      "phonetic": "/spɛnd/",
+      "translation": "花费"
+    },
+    "stores": {
+      "phonetic": "/stɔrz/",
+      "translation": "商店"
+    },
+    "takes": {
+      "phonetic": "/teɪks/",
+      "translation": "需要"
+    },
+    "technologies": {
+      "phonetic": "/tɛkˈnɑləʤiz/",
+      "translation": "技术"
+    },
+    "than": {
+      "phonetic": "/ðən/",
+      "translation": "比"
+    },
+    "the": {
+      "phonetic": "/ðə/",
+      "translation": "这个；那个"
+    },
+    "them": {
+      "phonetic": "/ðɛm/",
+      "translation": "他们"
+    },
+    "there": {
+      "phonetic": "/ðer/",
+      "translation": "那里；有"
+    },
+    "they": {
+      "phonetic": "/ðeɪ/",
+      "translation": "他们；它们"
+    },
+    "things": {
+      "phonetic": "/θɪŋz/",
+      "translation": "事物"
+    },
+    "tianjin": {
+      "phonetic": "/ˌtjɛnˈdʒɪn/",
+      "translation": "天津"
+    },
+    "time": {
+      "phonetic": "/taɪm/",
+      "translation": "时间"
+    },
+    "to": {
+      "phonetic": "/tuː/",
+      "translation": "到；向"
+    },
+    "travelling": {
+      "phonetic": "/ˈtrævəlɪŋ/",
+      "translation": "旅行"
+    },
+    "used": {
+      "phonetic": "/juzd/",
+      "translation": "用过的"
+    },
+    "using": {
+      "phonetic": "/ˈjuzɪŋ/",
+      "translation": "使用"
+    },
+    "wallet": {
+      "phonetic": "/ˈwɒlɪt/",
+      "translation": "钱包",
+      "cardId": "core-010"
+    },
+    "want": {
+      "phonetic": "/wɔnt/",
+      "translation": "想"
+    },
+    "whatever": {
+      "phonetic": "/wɒtˈevə(r)/",
+      "translation": "无论什么",
+      "cardId": "core-012"
+    },
+    "whats": {
+      "phonetic": "/wʌts/",
+      "translation": "是什么"
+    },
+    "who": {
+      "phonetic": "/hu/",
+      "translation": "WHO"
+    },
+    "with": {
+      "phonetic": "/wɪð/",
+      "translation": "和；带有"
+    }
+  },
+  "coreCards": [
+    {
+      "id": "core-001",
+      "word": "member",
+      "speak": "member",
+      "phonetic": "/ˈmembə(r)/",
+      "meaning": "成员",
+      "memory": "member → 成员",
+      "match": "member",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-002",
+      "word": "science",
+      "speak": "science",
+      "phonetic": "/ˈsaɪəns/",
+      "meaning": "科学",
+      "memory": "science → 科学",
+      "match": "science",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-003",
+      "word": "knowledge",
+      "speak": "knowledge",
+      "phonetic": "/ˈnɒlɪdʒ/",
+      "meaning": "知识；了解",
+      "memory": "knowledge → 知识；了解",
+      "match": "knowledge",
+      "example": "He has great knowledge about new technologies in China. 他非常了解中国的新技术。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-004",
+      "word": "share",
+      "speak": "share",
+      "phonetic": "/ʃeə(r)/",
+      "meaning": "分享；合用",
+      "memory": "share → 分享；合用",
+      "match": "share",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-005",
+      "word": "bike",
+      "speak": "bike",
+      "phonetic": "/baɪk/",
+      "meaning": "自行车",
+      "memory": "bike → 自行车",
+      "match": "bike",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-006",
+      "word": "popular",
+      "speak": "popular",
+      "phonetic": "/ˈpɒpjələ(r)/",
+      "meaning": "受欢迎的",
+      "memory": "popular → 受欢迎的",
+      "match": "popular",
+      "example": "Shared bikes are becoming popular. 共享单车正变得流行。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-007",
+      "word": "cycling",
+      "speak": "cycling",
+      "phonetic": "/ˈsaɪklɪŋ/",
+      "meaning": "骑自行车",
+      "memory": "cycling → 骑自行车",
+      "match": "cycling",
+      "example": "They are bringing cycling back to people's lives and are making people more active. 它们让骑行回到人们的生活中，并使人们更活跃。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-008",
+      "word": "electronic",
+      "speak": "electronic",
+      "phonetic": "/ɪˌlekˈtrɒnɪk/",
+      "meaning": "电子的",
+      "memory": "electronic → 电子的",
+      "match": "electronic",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-009",
+      "word": "payment",
+      "speak": "payment",
+      "phonetic": "/ˈpeɪmənt/",
+      "meaning": "付款",
+      "memory": "payment → 付款",
+      "match": "payment",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-010",
+      "word": "wallet",
+      "speak": "wallet",
+      "phonetic": "/ˈwɒlɪt/",
+      "meaning": "钱包",
+      "memory": "wallet → 钱包",
+      "match": "wallet",
+      "example": "My wallet is no longer used. 我的钱包不再被使用。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-011",
+      "word": "money",
+      "speak": "money",
+      "phonetic": "/ˈmʌni/",
+      "meaning": "钱",
+      "memory": "money → 钱",
+      "match": "money",
+      "example": "I don't need to carry money anymore. 我不再需要随身带钱。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-012",
+      "word": "whatever",
+      "speak": "whatever",
+      "phonetic": "/wɒtˈevə(r)/",
+      "meaning": "无论什么",
+      "memory": "whatever → 无论什么",
+      "match": "whatever",
+      "example": "I can buy whatever I want with my mobile phone as long as there is the Internet. 只要有互联网，我就可以用手机买任何我想要的东西。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-013",
+      "word": "mobile",
+      "speak": "mobile",
+      "phonetic": "/ˈməʊbaɪl/",
+      "meaning": "移动的",
+      "memory": "mobile → 移动的",
+      "match": "mobile",
+      "example": "I can buy whatever I want with my mobile phone as long as there is the Internet. 只要有互联网，我就可以用手机买任何我想要的东西。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-014",
+      "word": "phone",
+      "speak": "phone",
+      "phonetic": "/fəʊn/",
+      "meaning": "电话",
+      "memory": "phone → 电话",
+      "match": "phone",
+      "example": "I can buy whatever I want with my mobile phone as long as there is the Internet. 只要有互联网，我就可以用手机买任何我想要的东西。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-015",
+      "word": "Internet",
+      "speak": "Internet",
+      "phonetic": "/ˈɪntənet/",
+      "meaning": "互联网",
+      "memory": "Internet → 互联网",
+      "match": "Internet",
+      "example": "I can buy whatever I want with my mobile phone as long as there is the Internet. 只要有互联网，我就可以用手机买任何我想要的东西。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-016",
+      "word": "scan",
+      "speak": "scan",
+      "phonetic": "/skæn/",
+      "meaning": "扫描",
+      "memory": "scan → 扫描",
+      "match": "scan",
+      "example": "All I need to do is scan a store's QR code and pay. 我需要做的只是扫描商店的二维码并付款。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-017",
+      "word": "code",
+      "speak": "code",
+      "phonetic": "/kəʊd/",
+      "meaning": "代码；编码",
+      "memory": "code → 代码；编码",
+      "match": "code",
+      "example": "All I need to do is scan a store's QR code and pay. 我需要做的只是扫描商店的二维码并付款。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-018",
+      "word": "pay",
+      "speak": "pay",
+      "phonetic": "/peɪ/",
+      "meaning": "支付",
+      "memory": "pay → 支付",
+      "match": "pay",
+      "example": "All I need to do is scan a store's QR code and pay. 我需要做的只是扫描商店的二维码并付款。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-019",
+      "word": "online",
+      "speak": "online",
+      "phonetic": "/ˌɒnˈlaɪn/",
+      "meaning": "在线的",
+      "memory": "online → 在线的",
+      "match": "online",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-020",
+      "word": "seek",
+      "speak": "seek",
+      "phonetic": "/siːk/",
+      "meaning": "寻找",
+      "memory": "seek → 寻找",
+      "match": "seek",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-021",
+      "word": "cheaply",
+      "speak": "cheaply",
+      "phonetic": "/ˈtʃiːpli/",
+      "meaning": "便宜地",
+      "memory": "cheaply → 便宜地",
+      "match": "cheaply",
+      "example": "What's more, I can buy them cheaply. 而且，我可以便宜地买到它们。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-022",
+      "word": "speed",
+      "speak": "speed",
+      "phonetic": "/spiːd/",
+      "meaning": "速度",
+      "memory": "speed → 速度",
+      "match": "speed",
+      "example": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away. 我曾有一次乘坐中国高铁从北京到天津旅行的经历，两地相距 100 多公里。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-023",
+      "word": "railway",
+      "speak": "railway",
+      "phonetic": "/ˈreɪlweɪ/",
+      "meaning": "铁路",
+      "memory": "railway → 铁路",
+      "match": "railway",
+      "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-024",
+      "word": "experience",
+      "speak": "experience",
+      "phonetic": "/ɪkˈspɪəriəns/",
+      "meaning": "经历；经验",
+      "memory": "experience → 经历；经验",
+      "match": "experience",
+      "example": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away. 我曾有一次乘坐中国高铁从北京到天津旅行的经历，两地相距 100 多公里。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-025",
+      "word": "journey",
+      "speak": "journey",
+      "phonetic": "/ˈdʒɜːni/",
+      "meaning": "旅程",
+      "memory": "journey → 旅程",
+      "match": "journey",
+      "example": "The journey takes only half an hour. 旅程只需半个小时。",
+      "note": "先听发音，再跟着句子读一遍。"
+    },
+    {
+      "id": "core-026",
+      "word": "half",
+      "speak": "half",
+      "phonetic": "/hɑːf/",
+      "meaning": "一半",
+      "memory": "half → 一半",
+      "match": "half",
+      "example": "The journey takes only half an hour. 旅程只需半个小时。",
+      "note": "先听发音，再跟着句子读一遍。"
+    }
+  ],
+  "coreWords": [
+    {
+      "word": "member",
+      "phonetic": "/ˈmembə(r)/",
+      "meaning": "成员"
+    },
+    {
+      "word": "science",
+      "phonetic": "/ˈsaɪəns/",
+      "meaning": "科学"
+    },
+    {
+      "word": "knowledge",
+      "phonetic": "/ˈnɒlɪdʒ/",
+      "meaning": "知识；了解"
+    },
+    {
+      "word": "share",
+      "phonetic": "/ʃeə(r)/",
+      "meaning": "分享；合用"
+    },
+    {
+      "word": "bike",
+      "phonetic": "/baɪk/",
+      "meaning": "自行车"
+    },
+    {
+      "word": "popular",
+      "phonetic": "/ˈpɒpjələ(r)/",
+      "meaning": "受欢迎的"
+    },
+    {
+      "word": "cycling",
+      "phonetic": "/ˈsaɪklɪŋ/",
+      "meaning": "骑自行车"
+    },
+    {
+      "word": "electronic",
+      "phonetic": "/ɪˌlekˈtrɒnɪk/",
+      "meaning": "电子的"
+    },
+    {
+      "word": "payment",
+      "phonetic": "/ˈpeɪmənt/",
+      "meaning": "付款"
+    },
+    {
+      "word": "wallet",
+      "phonetic": "/ˈwɒlɪt/",
+      "meaning": "钱包"
+    },
+    {
+      "word": "money",
+      "phonetic": "/ˈmʌni/",
+      "meaning": "钱"
+    },
+    {
+      "word": "whatever",
+      "phonetic": "/wɒtˈevə(r)/",
+      "meaning": "无论什么"
+    },
+    {
+      "word": "mobile",
+      "phonetic": "/ˈməʊbaɪl/",
+      "meaning": "移动的"
+    },
+    {
+      "word": "phone",
+      "phonetic": "/fəʊn/",
+      "meaning": "电话"
+    },
+    {
+      "word": "Internet",
+      "phonetic": "/ˈɪntənet/",
+      "meaning": "互联网"
+    },
+    {
+      "word": "scan",
+      "phonetic": "/skæn/",
+      "meaning": "扫描"
+    },
+    {
+      "word": "code",
+      "phonetic": "/kəʊd/",
+      "meaning": "代码；编码"
+    },
+    {
+      "word": "pay",
+      "phonetic": "/peɪ/",
+      "meaning": "支付"
+    },
+    {
+      "word": "online",
+      "phonetic": "/ˌɒnˈlaɪn/",
+      "meaning": "在线的"
+    },
+    {
+      "word": "seek",
+      "phonetic": "/siːk/",
+      "meaning": "寻找"
+    },
+    {
+      "word": "cheaply",
+      "phonetic": "/ˈtʃiːpli/",
+      "meaning": "便宜地"
+    },
+    {
+      "word": "speed",
+      "phonetic": "/spiːd/",
+      "meaning": "速度"
+    },
+    {
+      "word": "railway",
+      "phonetic": "/ˈreɪlweɪ/",
+      "meaning": "铁路"
+    },
+    {
+      "word": "experience",
+      "phonetic": "/ɪkˈspɪəriəns/",
+      "meaning": "经历；经验"
+    },
+    {
+      "word": "journey",
+      "phonetic": "/ˈdʒɜːni/",
+      "meaning": "旅程"
+    },
+    {
+      "word": "half",
+      "phonetic": "/hɑːf/",
+      "meaning": "一半"
+    }
+  ]
+}

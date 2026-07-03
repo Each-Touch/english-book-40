@@ -1,0 +1,84 @@
+{
+  "voice": "adult male | teacher clear",
+  "reference": "12-adult-male-teacher-clear.wav",
+  "cfg_value": 1.35,
+  "inference_timesteps": 12,
+  "normalize": false,
+  "pages": [
+    {
+      "page": 0,
+      "visible": "New Technologies in China",
+      "speech": "New Technologies in China"
+    },
+    {
+      "page": 1,
+      "visible": "Ethan is a member of the science club.",
+      "speech": "Ethan is a member of the science club."
+    },
+    {
+      "page": 2,
+      "visible": "He has great knowledge about new technologies in China.",
+      "speech": "He has great knowledge about new technologies in China."
+    },
+    {
+      "page": 3,
+      "visible": "Shared bikes are becoming popular.",
+      "speech": "Shared bikes are becoming popular."
+    },
+    {
+      "page": 4,
+      "visible": "They are bringing cycling back to people's lives and are making people more active.",
+      "speech": "They are bringing cycling back to people's lives and are making people more active."
+    },
+    {
+      "page": 5,
+      "visible": "My wallet is no longer used.",
+      "speech": "My wallet is no longer used."
+    },
+    {
+      "page": 6,
+      "visible": "I don't need to carry money anymore.",
+      "speech": "I don't need to carry money anymore."
+    },
+    {
+      "page": 7,
+      "visible": "I can buy whatever I want with my mobile phone as long as there is the Internet.",
+      "speech": "I can buy whatever I want with my mobile phone as long as there is the Internet."
+    },
+    {
+      "page": 8,
+      "visible": "All I need to do is scan a store's QR code and pay.",
+      "speech": "All I need to do is scan a store's QR code and pay."
+    },
+    {
+      "page": 9,
+      "visible": "Almost everyone who sells things is using Alipay.",
+      "speech": "Almost everyone who sells things is using Alipay."
+    },
+    {
+      "page": 10,
+      "visible": "I don't need to go out and spend a lot of time seeking things I want.",
+      "speech": "I don't need to go out and spend a lot of time seeking things I want."
+    },
+    {
+      "page": 11,
+      "visible": "I can buy different kinds of things just at home.",
+      "speech": "I can buy different kinds of things just at home."
+    },
+    {
+      "page": 12,
+      "visible": "What's more, I can buy them cheaply.",
+      "speech": "What's more, I can buy them cheaply."
+    },
+    {
+      "page": 13,
+      "visible": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away.",
+      "speech": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away."
+    },
+    {
+      "page": 14,
+      "visible": "The journey takes only half an hour.",
+      "speech": "The journey takes only half an hour."
+    }
+  ]
+}

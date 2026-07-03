@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>New Technologies in China - 互动点读绘本</title>
+  <style>
+    :root {
+      --brand-yellow: #fdd95a;
+      --brand-green: #02543b;
+      --ink: #1f332c;
+      --muted: #637870;
+      --line: #c9dacc;
+      --page: #fffdf7;
+      --soft: #f3f8ef;
+      --orange: #f27a42;
+      --shadow: 0 16px 38px rgba(27, 55, 43, 0.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #f7faf4;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    body { overflow-x: hidden; }
+
+    .brand-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 56px;
+      background: var(--brand-yellow);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .brand-logo { height: 36px; width: auto; display: block; }
+
+    .app {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 18px 18px 24px;
+    }
+
+    .title-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .kicker { color: var(--muted); font-size: 14px; font-weight: 800; }
+
+    h1 {
+      margin-top: 4px;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .page-indicator {
+      min-width: 136px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      color: var(--brand-green);
+      padding: 8px 12px;
+      text-align: center;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      height: 12px;
+      background: #fff;
+      border: 1px solid #d7e6d8;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #56c9b9, #fdd95a, #f28b52);
+      transition: width 0.28s ease;
+    }
+
+    .badges {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 10px 0 16px;
+    }
+
+    .badge {
+      min-height: 50px;
+      border: 1px solid #dbe8dd;
+      border-radius: 8px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 10px;
+      color: #84928c;
+      transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .badge.active { color: var(--brand-green); background: #f0fff4; border-color: #a6d7ad; }
+    .badge-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #edf6ed;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+    .badge-title { font-size: 13px; line-height: 1.25; font-weight: 900; }
+
+    .book-stage {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--page);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .image-frame {
+      background: #fff;
+      border-bottom: 1px solid #e4ece5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .image-frame.image-error::after {
+      content: attr(data-image-status);
+      position: absolute;
+      inset: auto 16px 16px 16px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255, 244, 230, 0.95);
+      color: #8a3f00;
+      font-size: 14px;
+      box-shadow: 0 8px 20px rgba(138, 63, 0, 0.15);
+    }
+
+    .page-image {
+      width: 100%;
+      max-height: min(62vh, 680px);
+      object-fit: contain;
+      background: #fff;
+      display: block;
+    }
+
+    .text-panel { padding: 18px 20px 20px; background: linear-gradient(180deg, #fffefa, #f7fbf4); }
+
+    .sentence {
+      min-height: 1.45em;
+      text-align: center;
+      color: #1d342c;
+      font-size: clamp(20px, 2.5vw, 32px);
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .word {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 0 2px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .word:hover, .word:focus { background: #fff0bd; color: #864900; outline: none; }
+    .word.core-word { color: var(--brand-green); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; }
+
+    .translation {
+      min-height: 1.5em;
+      max-width: 820px;
+      margin: 12px auto 0;
+      text-align: center;
+      color: #455a50;
+      font-size: clamp(15px, 1.9vw, 20px);
+      line-height: 1.45;
+      font-weight: 650;
+    }
+
+    .translation.hidden { visibility: hidden; }
+
+    .audio-note {
+      min-height: 20px;
+      margin-top: 8px;
+      color: #a34a24;
+      font-size: 13px;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .reading-mode {
+      display: none;
+      margin-top: 14px;
+      border: 1px solid #dbe8dd;
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+      text-align: center;
+    }
+    .reading-mode.active { display: block; }
+    .reading-status { color: var(--brand-green); font-size: 18px; font-weight: 900; margin-bottom: 8px; }
+    .stars { margin: 8px 0; color: var(--orange); font-size: 24px; letter-spacing: 3px; }
+    .feedback-list { list-style: none; display: grid; gap: 8px; max-width: 780px; margin: 10px auto 0; text-align: left; }
+    .feedback-list li { border-radius: 8px; background: var(--soft); padding: 9px 10px; color: #344a41; font-weight: 750; }
+
+    .core-panel {
+      margin-top: 14px;
+      border: 1px solid #dbe8dd;
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .core-title {
+      color: var(--brand-green);
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .core-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .core-chip {
+      border: 1px solid #c9dacc;
+      border-radius: 999px;
+      background: #f7fbf4;
+      color: #24453a;
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .core-chip:hover,
+    .core-chip:focus {
+      border-color: var(--brand-green);
+      background: #eef8f0;
+      outline: none;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      min-height: 46px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--brand-green);
+      color: #fff;
+      padding: 8px 10px;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(2, 84, 59, 0.16);
+      transition: transform 0.14s ease, opacity 0.14s ease, box-shadow 0.14s ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(2, 84, 59, 0.2); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn.secondary { background: #3b8a78; }
+    .btn.warn { background: var(--orange); }
+    .btn.light { background: #617971; }
+
+    .tooltip {
+      position: fixed;
+      z-index: 50;
+      max-width: 260px;
+      transform: translate(-50%, -110%);
+      opacity: 0;
+      pointer-events: none;
+      background: #1e332b;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
+      transition: opacity 0.16s ease;
+      text-align: center;
+    }
+    .tooltip.show { opacity: 1; }
+    .tooltip .phonetic { color: var(--brand-yellow); font-weight: 900; margin-bottom: 4px; }
+
+    .card-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(21, 35, 30, 0.34);
+    }
+    .card-overlay.show { display: flex; }
+
+    .word-card {
+      width: min(860px, 100%);
+      max-height: min(88vh, 760px);
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: clamp(26px, 5vw, 54px);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.24);
+      text-align: center;
+    }
+
+    .card-word { color: #6d82e8; font-size: clamp(46px, 9vw, 74px); line-height: 1; font-weight: 900; margin-bottom: 22px; }
+    .card-memory {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: #efe5ff;
+      color: #7b55f5;
+      padding: 9px 18px;
+      font-size: clamp(18px, 3vw, 25px);
+      line-height: 1.25;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+    .card-phonetic { color: #ff9700; font-size: clamp(26px, 4vw, 38px); font-weight: 900; margin-bottom: 18px; }
+    .card-meaning { color: #2e3b4a; font-size: clamp(23px, 4vw, 34px); line-height: 1.3; font-weight: 800; margin-bottom: 28px; }
+    .card-info { display: grid; gap: 18px; text-align: left; }
+    .card-line { border-radius: 8px; padding: 18px 22px; color: #111; font-size: clamp(18px, 3vw, 25px); line-height: 1.45; font-weight: 750; }
+    .card-line strong { color: #3479ee; margin-right: 8px; }
+    .card-line.match { background: #dbeaff; }
+    .card-line.example { background: #d3f8e4; }
+    .card-line.note { background: #fff1cc; }
+    .card-actions { display: flex; flex-wrap: wrap; gap: 0; margin-top: 24px; }
+    .card-btn {
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      min-height: 64px;
+      padding: 12px 28px;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.13);
+    }
+    .card-btn.listen { background: linear-gradient(135deg, #45b8ff, #10dce1); }
+    .card-btn.close { background: linear-gradient(135deg, #6b86ea, #7a52b2); }
+
+    @media (max-width: 820px) {
+      .brand-bar { height: 50px; padding: 0 14px; }
+      .brand-logo { height: 32px; }
+      .app { padding: 12px 10px 16px; }
+      .title-row { grid-template-columns: 1fr; gap: 10px; }
+      .page-indicator { width: 100%; }
+      .badges { grid-template-columns: 1fr; }
+      .badge { min-height: 42px; }
+      .page-image { max-height: 48vh; }
+      .text-panel { padding: 14px 12px; }
+      .controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .btn { min-height: 44px; font-size: 14px; }
+      .core-chip { font-size: 13px; padding: 7px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="brand-bar">
+    <img class="brand-logo" src="LOGO.png" alt="艺市小洋人学英文小组">
+  </header>
+
+  <main class="app">
+    <section class="title-row">
+      <div>
+        <div class="kicker">互动跟读闯关绘本</div>
+        <h1 id="bookTitle">Loading...</h1>
+      </div>
+      <div class="page-indicator" id="pageIndicator">第 1 页</div>
+    </section>
+
+    <section aria-label="学习进度">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="badges">
+        <div class="badge" id="badge1"><div class="badge-mark">1</div><div class="badge-title" id="badgeTitle1">第一单元</div></div>
+        <div class="badge" id="badge2"><div class="badge-mark">2</div><div class="badge-title" id="badgeTitle2">第二单元</div></div>
+        <div class="badge" id="badge3"><div class="badge-mark">3</div><div class="badge-title" id="badgeTitle3">第三单元</div></div>
+      </div>
+    </section>
+
+    <section class="book-stage">
+      <div class="image-frame"><img id="pageImage" class="page-image" src="" alt="Page 1"></div>
+      <div class="text-panel">
+        <div id="sentence" class="sentence"></div>
+        <div id="translation" class="translation"></div>
+        <div id="audioNotice" class="audio-note" aria-live="polite">已使用固定“成人男声｜老师清晰”音频；点读和朗读均使用本地音频。</div>
+      </div>
+    </section>
+
+    <section class="core-panel" aria-label="核心词汇">
+      <div class="core-title" id="coreTitle">核心词汇</div>
+      <div class="core-list" id="coreList"></div>
+    </section>
+
+    <section class="reading-mode" id="readingMode">
+      <div class="reading-status" id="readingStatus">准备跟读</div>
+      <div id="scoreDisplay"></div>
+      <div class="stars" id="starsDisplay"></div>
+      <ul class="feedback-list" id="feedbackList"></ul>
+    </section>
+
+    <nav class="controls" aria-label="绘本控制">
+      <button class="btn" id="prevBtn">上一页</button>
+      <button class="btn secondary" id="readPageBtn">朗读本页</button>
+      <button class="btn warn" id="followReadBtn">跟读模式</button>
+      <button class="btn secondary" id="readAllBtn">全文朗读</button>
+      <button class="btn light" id="toggleTransBtn">隐藏中文</button>
+      <button class="btn" id="nextBtn">下一页</button>
+    </nav>
+  </main>
+
+  <div class="tooltip" id="tooltip"><div class="phonetic" id="phonetic"></div><div id="tooltipTranslation"></div></div>
+
+  <div class="card-overlay" id="wordCardOverlay" role="dialog" aria-modal="true" aria-label="核心词汇学习卡">
+    <div class="word-card">
+      <div class="card-word" id="cardWord"></div>
+      <div class="card-memory" id="cardMemory"></div>
+      <div class="card-phonetic" id="cardPhonetic"></div>
+      <div class="card-meaning" id="cardMeaning"></div>
+      <div class="card-info">
+        <div class="card-line match" id="cardMatch"></div>
+        <div class="card-line example" id="cardExample"></div>
+        <div class="card-line note" id="cardNote"></div>
+      </div>
+      <div class="card-actions">
+        <button class="card-btn listen" id="cardListenBtn">再听一次</button>
+        <button class="card-btn close" id="cardCloseBtn">知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <script id="bookDataJson" type="application/json">{"passageNumber": 40, "title": "New Technologies in China", "units": ["第一单元 开始", "第二单元 发展", "第三单元 结尾"], "pages": [{"image": "assets/images/00.png", "en": "New Technologies in China", "cn": "第 40 篇", "unit": 1}, {"image": "assets/images/01.png", "en": "Ethan is a member of the science club.", "cn": "伊森是科学俱乐部的一名成员。", "unit": 1}, {"image": "assets/images/02.png", "en": "He has great knowledge about new technologies in China.", "cn": "他非常了解中国的新技术。", "unit": 1}, {"image": "assets/images/03.png", "en": "Shared bikes are becoming popular.", "cn": "共享单车正变得流行。", "unit": 1}, {"image": "assets/images/04.png", "en": "They are bringing cycling back to people's lives and are making people more active.", "cn": "它们让骑行回到人们的生活中，并使人们更活跃。", "unit": 1}, {"image": "assets/images/05.png", "en": "My wallet is no longer used.", "cn": "我的钱包不再被使用。", "unit": 1}, {"image": "assets/images/06.png", "en": "I don't need to carry money anymore.", "cn": "我不再需要随身带钱。", "unit": 2}, {"image": "assets/images/07.png", "en": "I can buy whatever I want with my mobile phone as long as there is the Internet.", "cn": "只要有互联网，我就可以用手机买任何我想要的东西。", "unit": 2}, {"image": "assets/images/08.png", "en": "All I need to do is scan a store's QR code and pay.", "cn": "我需要做的只是扫描商店的二维码并付款。", "unit": 2}, {"image": "assets/images/09.png", "en": "Almost everyone who sells things is using Alipay.", "cn": "几乎每个卖东西的人都在使用支付宝。", "unit": 2}, {"image": "assets/images/10.png", "en": "I don't need to go out and spend a lot of time seeking things I want.", "cn": "我不需要出门花很多时间寻找想要的东西。", "unit": 2}, {"image": "assets/images/11.png", "en": "I can buy different kinds of things just at home.", "cn": "我只在家里就可以买到各种各样的东西。", "unit": 3}, {"image": "assets/images/12.png", "en": "What's more, I can buy them cheaply.", "cn": "而且，我可以便宜地买到它们。", "unit": 3}, {"image": "assets/images/13.png", "en": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away.", "cn": "我曾有一次乘坐中国高铁从北京到天津旅行的经历，两地相距 100 多公里。", "unit": 3}, {"image": "assets/images/14.png", "en": "The journey takes only half an hour.", "cn": "旅程只需半个小时。", "unit": 3}], "dictionary": {"a": {"phonetic": "/ə/", "translation": "一个；一"}, "about": {"phonetic": "/əˈbaʊt/", "translation": "关于"}, "active": {"phonetic": "/ˈæktɪv/", "translation": "积极的"}, "alipay": {"phonetic": "/ˈælɪpeɪ/", "translation": "支付宝"}, "all": {"phonetic": "/ɔl/", "translation": "全部"}, "almost": {"phonetic": "/ˈɔlˌmoʊst/", "translation": "几乎"}, "an": {"phonetic": "/ən/", "translation": "一个；一"}, "and": {"phonetic": "/ænd/", "translation": "和"}, "anymore": {"phonetic": "/ˌɛniˈmɔr/", "translation": "不再"}, "are": {"phonetic": "/ər/", "translation": "是"}, "as": {"phonetic": "/æz/", "translation": "作为；像"}, "at": {"phonetic": "/æt/", "translation": "在；于"}, "away": {"phonetic": "/əˈweɪ/", "translation": "离开"}, "back": {"phonetic": "/bæk/", "translation": "后退"}, "becoming": {"phonetic": "/bɪˈkəmɪŋ/", "translation": "成为"}, "beijing": {"phonetic": "/ˌbeɪˈdʒɪŋ/", "translation": "北京"}, "bike": {"phonetic": "/baɪk/", "translation": "自行车", "cardId": "core-005"}, "bikes": {"phonetic": "/baɪks/", "translation": "自行车"}, "bringing": {"phonetic": "/ˈbrɪŋɪŋ/", "translation": "带来"}, "buy": {"phonetic": "/baɪ/", "translation": "买"}, "by": {"phonetic": "/baɪ/", "translation": "通过；在旁边"}, "can": {"phonetic": "/kən/", "translation": "能"}, "carry": {"phonetic": "/ˈkɛri/", "translation": "携带"}, "cheaply": {"phonetic": "/ˈtʃiːpli/", "translation": "便宜地", "cardId": "core-021"}, "china": {"phonetic": "/ˈʧaɪnə/", "translation": "中国"}, "chinese": {"phonetic": "/ʧaɪˈniz/", "translation": "中国人"}, "club": {"phonetic": "/kləb/", "translation": "俱乐部"}, "code": {"phonetic": "/kəʊd/", "translation": "代码；编码", "cardId": "core-017"}, "cycling": {"phonetic": "/ˈsaɪklɪŋ/", "translation": "骑自行车", "cardId": "core-007"}, "different": {"phonetic": "/ˈdɪfərənt/", "translation": "不同的"}, "do": {"phonetic": "/du/", "translation": "做"}, "dont": {"phonetic": "/doʊnt/", "translation": "不要"}, "electronic": {"phonetic": "/ɪˌlekˈtrɒnɪk/", "translation": "电子的", "cardId": "core-008"}, "ethan": {"phonetic": "/ˈiθən/", "translation": "伊森"}, "everyone": {"phonetic": "/ˈɛvriˌwən/", "translation": "每个人"}, "experience": {"phonetic": "/ɪkˈspɪəriəns/", "translation": "经历；经验", "cardId": "core-024"}, "from": {"phonetic": "/frʌm/", "translation": "从"}, "go": {"phonetic": "/goʊ/", "translation": "去"}, "great": {"phonetic": "/greɪt/", "translation": "伟大的"}, "had": {"phonetic": "/hæd/", "translation": "有"}, "half": {"phonetic": "/hɑːf/", "translation": "一半", "cardId": "core-026"}, "has": {"phonetic": "/həz/", "translation": "有"}, "he": {"phonetic": "/hiː/", "translation": "他"}, "high": {"phonetic": "/haɪ/", "translation": "高的"}, "home": {"phonetic": "/hoʊm/", "translation": "家"}, "hour": {"phonetic": "/aʊər/", "translation": "小时"}, "i": {"phonetic": "/aɪ/", "translation": "我"}, "in": {"phonetic": "/ɪn/", "translation": "在……里"}, "internet": {"phonetic": "/ˈɪntənet/", "translation": "互联网", "cardId": "core-015"}, "is": {"phonetic": "/ɪz/", "translation": "是"}, "journey": {"phonetic": "/ˈdʒɜːni/", "translation": "旅程", "cardId": "core-025"}, "just": {"phonetic": "/ʤɪst/", "translation": "只是"}, "kinds": {"phonetic": "/kaɪnz/", "translation": "种类"}, "km": {"phonetic": "/ˌkeɪ ˈem/", "translation": "千米"}, "knowledge": {"phonetic": "/ˈnɒlɪdʒ/", "translation": "知识；了解", "cardId": "core-003"}, "lives": {"phonetic": "/lɪvz/", "translation": "生活"}, "long": {"phonetic": "/lɔŋ/", "translation": "长的"}, "longer": {"phonetic": "/ˈlɔŋgər/", "translation": "更长"}, "lot": {"phonetic": "/lɔt/", "translation": "很多"}, "making": {"phonetic": "/ˈmeɪkɪŋ/", "translation": "制作"}, "member": {"phonetic": "/ˈmembə(r)/", "translation": "成员", "cardId": "core-001"}, "mobile": {"phonetic": "/ˈməʊbaɪl/", "translation": "移动的", "cardId": "core-013"}, "money": {"phonetic": "/ˈmʌni/", "translation": "钱", "cardId": "core-011"}, "more": {"phonetic": "/mɔr/", "translation": "更多的"}, "my": {"phonetic": "/maɪ/", "translation": "我的"}, "need": {"phonetic": "/nid/", "translation": "需要"}, "new": {"phonetic": "/nu/", "translation": "新的"}, "no": {"phonetic": "/noʊ/", "translation": "不"}, "of": {"phonetic": "/əv/", "translation": "……的"}, "online": {"phonetic": "/ˌɒnˈlaɪn/", "translation": "在线的", "cardId": "core-019"}, "only": {"phonetic": "/ˈoʊnli/", "translation": "仅有的"}, "out": {"phonetic": "/aʊt/", "translation": "出去"}, "pay": {"phonetic": "/peɪ/", "translation": "支付", "cardId": "core-018"}, "payment": {"phonetic": "/ˈpeɪmənt/", "translation": "付款", "cardId": "core-009"}, "people": {"phonetic": "/ˈpipəl/", "translation": "人们"}, "peoples": {"phonetic": "/ˈpipəlz/", "translation": "人民"}, "phone": {"phonetic": "/fəʊn/", "translation": "电话", "cardId": "core-014"}, "popular": {"phonetic": "/ˈpɒpjələ(r)/", "translation": "受欢迎的", "cardId": "core-006"}, "qr": {"phonetic": "/ˌkjuː ˈɑːr/", "translation": "二维码缩写"}, "railway": {"phonetic": "/ˈreɪlweɪ/", "translation": "铁路", "cardId": "core-023"}, "railways": {"phonetic": "/ˈreɪlˌweɪz/", "translation": "铁路"}, "scan": {"phonetic": "/skæn/", "translation": "扫描", "cardId": "core-016"}, "science": {"phonetic": "/ˈsaɪəns/", "translation": "科学", "cardId": "core-002"}, "seek": {"phonetic": "/siːk/", "translation": "寻找", "cardId": "core-020"}, "seeking": {"phonetic": "/ˈsikɪŋ/", "translation": "寻求"}, "sells": {"phonetic": "/sɛlz/", "translation": "卖"}, "share": {"phonetic": "/ʃeə(r)/", "translation": "分享；合用", "cardId": "core-004"}, "shared": {"phonetic": "/ʃɛrd/", "translation": "共享"}, "speed": {"phonetic": "/spiːd/", "translation": "速度", "cardId": "core-022"}, "spend": {"phonetic": "/spɛnd/", "translation": "花费"}, "stores": {"phonetic": "/stɔrz/", "translation": "商店"}, "takes": {"phonetic": "/teɪks/", "translation": "需要"}, "technologies": {"phonetic": "/tɛkˈnɑləʤiz/", "translation": "技术"}, "than": {"phonetic": "/ðən/", "translation": "比"}, "the": {"phonetic": "/ðə/", "translation": "这个；那个"}, "them": {"phonetic": "/ðɛm/", "translation": "他们"}, "there": {"phonetic": "/ðer/", "translation": "那里；有"}, "they": {"phonetic": "/ðeɪ/", "translation": "他们；它们"}, "things": {"phonetic": "/θɪŋz/", "translation": "事物"}, "tianjin": {"phonetic": "/ˌtjɛnˈdʒɪn/", "translation": "天津"}, "time": {"phonetic": "/taɪm/", "translation": "时间"}, "to": {"phonetic": "/tuː/", "translation": "到；向"}, "travelling": {"phonetic": "/ˈtrævəlɪŋ/", "translation": "旅行"}, "used": {"phonetic": "/juzd/", "translation": "用过的"}, "using": {"phonetic": "/ˈjuzɪŋ/", "translation": "使用"}, "wallet": {"phonetic": "/ˈwɒlɪt/", "translation": "钱包", "cardId": "core-010"}, "want": {"phonetic": "/wɔnt/", "translation": "想"}, "whatever": {"phonetic": "/wɒtˈevə(r)/", "translation": "无论什么", "cardId": "core-012"}, "whats": {"phonetic": "/wʌts/", "translation": "是什么"}, "who": {"phonetic": "/hu/", "translation": "WHO"}, "with": {"phonetic": "/wɪð/", "translation": "和；带有"}}, "coreCards": [{"id": "core-001", "word": "member", "speak": "member", "phonetic": "/ˈmembə(r)/", "meaning": "成员", "memory": "member → 成员", "match": "member", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-002", "word": "science", "speak": "science", "phonetic": "/ˈsaɪəns/", "meaning": "科学", "memory": "science → 科学", "match": "science", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-003", "word": "knowledge", "speak": "knowledge", "phonetic": "/ˈnɒlɪdʒ/", "meaning": "知识；了解", "memory": "knowledge → 知识；了解", "match": "knowledge", "example": "He has great knowledge about new technologies in China. 他非常了解中国的新技术。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-004", "word": "share", "speak": "share", "phonetic": "/ʃeə(r)/", "meaning": "分享；合用", "memory": "share → 分享；合用", "match": "share", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-005", "word": "bike", "speak": "bike", "phonetic": "/baɪk/", "meaning": "自行车", "memory": "bike → 自行车", "match": "bike", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-006", "word": "popular", "speak": "popular", "phonetic": "/ˈpɒpjələ(r)/", "meaning": "受欢迎的", "memory": "popular → 受欢迎的", "match": "popular", "example": "Shared bikes are becoming popular. 共享单车正变得流行。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-007", "word": "cycling", "speak": "cycling", "phonetic": "/ˈsaɪklɪŋ/", "meaning": "骑自行车", "memory": "cycling → 骑自行车", "match": "cycling", "example": "They are bringing cycling back to people's lives and are making people more active. 它们让骑行回到人们的生活中，并使人们更活跃。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-008", "word": "electronic", "speak": "electronic", "phonetic": "/ɪˌlekˈtrɒnɪk/", "meaning": "电子的", "memory": "electronic → 电子的", "match": "electronic", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-009", "word": "payment", "speak": "payment", "phonetic": "/ˈpeɪmənt/", "meaning": "付款", "memory": "payment → 付款", "match": "payment", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-010", "word": "wallet", "speak": "wallet", "phonetic": "/ˈwɒlɪt/", "meaning": "钱包", "memory": "wallet → 钱包", "match": "wallet", "example": "My wallet is no longer used. 我的钱包不再被使用。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-011", "word": "money", "speak": "money", "phonetic": "/ˈmʌni/", "meaning": "钱", "memory": "money → 钱", "match": "money", "example": "I don't need to carry money anymore. 我不再需要随身带钱。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-012", "word": "whatever", "speak": "whatever", "phonetic": "/wɒtˈevə(r)/", "meaning": "无论什么", "memory": "whatever → 无论什么", "match": "whatever", "example": "I can buy whatever I want with my mobile phone as long as there is the Internet. 只要有互联网，我就可以用手机买任何我想要的东西。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-013", "word": "mobile", "speak": "mobile", "phonetic": "/ˈməʊbaɪl/", "meaning": "移动的", "memory": "mobile → 移动的", "match": "mobile", "example": "I can buy whatever I want with my mobile phone as long as there is the Internet. 只要有互联网，我就可以用手机买任何我想要的东西。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-014", "word": "phone", "speak": "phone", "phonetic": "/fəʊn/", "meaning": "电话", "memory": "phone → 电话", "match": "phone", "example": "I can buy whatever I want with my mobile phone as long as there is the Internet. 只要有互联网，我就可以用手机买任何我想要的东西。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-015", "word": "Internet", "speak": "Internet", "phonetic": "/ˈɪntənet/", "meaning": "互联网", "memory": "Internet → 互联网", "match": "Internet", "example": "I can buy whatever I want with my mobile phone as long as there is the Internet. 只要有互联网，我就可以用手机买任何我想要的东西。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-016", "word": "scan", "speak": "scan", "phonetic": "/skæn/", "meaning": "扫描", "memory": "scan → 扫描", "match": "scan", "example": "All I need to do is scan a store's QR code and pay. 我需要做的只是扫描商店的二维码并付款。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-017", "word": "code", "speak": "code", "phonetic": "/kəʊd/", "meaning": "代码；编码", "memory": "code → 代码；编码", "match": "code", "example": "All I need to do is scan a store's QR code and pay. 我需要做的只是扫描商店的二维码并付款。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-018", "word": "pay", "speak": "pay", "phonetic": "/peɪ/", "meaning": "支付", "memory": "pay → 支付", "match": "pay", "example": "All I need to do is scan a store's QR code and pay. 我需要做的只是扫描商店的二维码并付款。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-019", "word": "online", "speak": "online", "phonetic": "/ˌɒnˈlaɪn/", "meaning": "在线的", "memory": "online → 在线的", "match": "online", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-020", "word": "seek", "speak": "seek", "phonetic": "/siːk/", "meaning": "寻找", "memory": "seek → 寻找", "match": "seek", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-021", "word": "cheaply", "speak": "cheaply", "phonetic": "/ˈtʃiːpli/", "meaning": "便宜地", "memory": "cheaply → 便宜地", "match": "cheaply", "example": "What's more, I can buy them cheaply. 而且，我可以便宜地买到它们。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-022", "word": "speed", "speak": "speed", "phonetic": "/spiːd/", "meaning": "速度", "memory": "speed → 速度", "match": "speed", "example": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away. 我曾有一次乘坐中国高铁从北京到天津旅行的经历，两地相距 100 多公里。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-023", "word": "railway", "speak": "railway", "phonetic": "/ˈreɪlweɪ/", "meaning": "铁路", "memory": "railway → 铁路", "match": "railway", "example": "Ethan is a member of the science club. 伊森是科学俱乐部的一名成员。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-024", "word": "experience", "speak": "experience", "phonetic": "/ɪkˈspɪəriəns/", "meaning": "经历；经验", "memory": "experience → 经历；经验", "match": "experience", "example": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away. 我曾有一次乘坐中国高铁从北京到天津旅行的经历，两地相距 100 多公里。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-025", "word": "journey", "speak": "journey", "phonetic": "/ˈdʒɜːni/", "meaning": "旅程", "memory": "journey → 旅程", "match": "journey", "example": "The journey takes only half an hour. 旅程只需半个小时。", "note": "先听发音，再跟着句子读一遍。"}, {"id": "core-026", "word": "half", "speak": "half", "phonetic": "/hɑːf/", "meaning": "一半", "memory": "half → 一半", "match": "half", "example": "The journey takes only half an hour. 旅程只需半个小时。", "note": "先听发音，再跟着句子读一遍。"}], "coreWords": [{"word": "member", "phonetic": "/ˈmembə(r)/", "meaning": "成员"}, {"word": "science", "phonetic": "/ˈsaɪəns/", "meaning": "科学"}, {"word": "knowledge", "phonetic": "/ˈnɒlɪdʒ/", "meaning": "知识；了解"}, {"word": "share", "phonetic": "/ʃeə(r)/", "meaning": "分享；合用"}, {"word": "bike", "phonetic": "/baɪk/", "meaning": "自行车"}, {"word": "popular", "phonetic": "/ˈpɒpjələ(r)/", "meaning": "受欢迎的"}, {"word": "cycling", "phonetic": "/ˈsaɪklɪŋ/", "meaning": "骑自行车"}, {"word": "electronic", "phonetic": "/ɪˌlekˈtrɒnɪk/", "meaning": "电子的"}, {"word": "payment", "phonetic": "/ˈpeɪmənt/", "meaning": "付款"}, {"word": "wallet", "phonetic": "/ˈwɒlɪt/", "meaning": "钱包"}, {"word": "money", "phonetic": "/ˈmʌni/", "meaning": "钱"}, {"word": "whatever", "phonetic": "/wɒtˈevə(r)/", "meaning": "无论什么"}, {"word": "mobile", "phonetic": "/ˈməʊbaɪl/", "meaning": "移动的"}, {"word": "phone", "phonetic": "/fəʊn/", "meaning": "电话"}, {"word": "Internet", "phonetic": "/ˈɪntənet/", "meaning": "互联网"}, {"word": "scan", "phonetic": "/skæn/", "meaning": "扫描"}, {"word": "code", "phonetic": "/kəʊd/", "meaning": "代码；编码"}, {"word": "pay", "phonetic": "/peɪ/", "meaning": "支付"}, {"word": "online", "phonetic": "/ˌɒnˈlaɪn/", "meaning": "在线的"}, {"word": "seek", "phonetic": "/siːk/", "meaning": "寻找"}, {"word": "cheaply", "phonetic": "/ˈtʃiːpli/", "meaning": "便宜地"}, {"word": "speed", "phonetic": "/spiːd/", "meaning": "速度"}, {"word": "railway", "phonetic": "/ˈreɪlweɪ/", "meaning": "铁路"}, {"word": "experience", "phonetic": "/ɪkˈspɪəriəns/", "meaning": "经历；经验"}, {"word": "journey", "phonetic": "/ˈdʒɜːni/", "meaning": "旅程"}, {"word": "half", "phonetic": "/hɑːf/", "meaning": "一半"}]}</script>
+  <script>
+    let book = null;
+    let bookData = [];
+    let dictionary = {};
+    let coreCards = [];
+    let cardById = {};
+    let currentPage = 0;
+    let translationVisible = true;
+    let isReading = false;
+    let readAllMode = false;
+    let currentUtterance = null;
+    let currentAudio = null;
+    let recognition = null;
+    let isRecording = false;
+
+    const pageImage = document.getElementById('pageImage');
+    const sentenceEl = document.getElementById('sentence');
+    const translationEl = document.getElementById('translation');
+    const pageIndicator = document.getElementById('pageIndicator');
+    const progressFill = document.getElementById('progressFill');
+    const tooltip = document.getElementById('tooltip');
+    const coreList = document.getElementById('coreList');
+
+    function normalizeWord(word) {
+      return word.toLowerCase().replace(/’/g, "'").replace(/[^a-z0-9]/g, '');
+    }
+
+    function getDictionaryItem(wordKey) {
+      if (dictionary[wordKey]) return dictionary[wordKey];
+      const variants = [];
+      if (wordKey.endsWith('ies')) variants.push(wordKey.slice(0, -3) + 'y');
+      if (wordKey.endsWith('ing')) {
+        variants.push(wordKey.slice(0, -3));
+        variants.push(wordKey.slice(0, -3) + 'e');
+      }
+      if (wordKey.endsWith('es')) variants.push(wordKey.slice(0, -2));
+      if (wordKey.endsWith('s')) variants.push(wordKey.slice(0, -1));
+      return variants.map((key) => dictionary[key]).find(Boolean) || null;
+    }
+
+    function buildSentenceHtml(text) {
+      const parts = text.match(/[A-Za-z]+(?:['’][A-Za-z]+)?|[^A-Za-z]+/g) || [];
+      return parts.map((part) => {
+        if (!/^[A-Za-z]+(?:['’][A-Za-z]+)?$/.test(part)) return part;
+        const key = normalizeWord(part);
+        const item = getDictionaryItem(key);
+        const cls = item && item.cardId ? 'word core-word' : 'word';
+        return '<span class="' + cls + '" tabindex="0" role="button" aria-label="点读 ' + part + '" data-word="' + key + '" data-audio="' + key + '" data-speak="' + part + '">' + part + '</span>';
+      }).join('');
+    }
+    function setImageStatus(message) {
+      const frame = pageImage.closest('.image-frame');
+      if (!frame) return;
+      frame.dataset.imageStatus = message || '';
+      frame.classList.toggle('image-error', Boolean(message));
+    }
+
+
+    function renderPage(index) {
+      const page = bookData[index];
+      setImageStatus('');
+      pageImage.onload = () => setImageStatus('');
+      pageImage.onerror = () => setImageStatus('图片未挂载：' + page.image);
+      pageImage.src = page.image;
+      pageImage.alt = 'Page ' + (index + 1);
+      sentenceEl.innerHTML = buildSentenceHtml(page.en);
+      translationEl.textContent = page.cn;
+      translationEl.classList.toggle('hidden', !translationVisible);
+      pageIndicator.textContent = '第 ' + (index + 1) + ' 页 / 共 ' + bookData.length + ' 页';
+      progressFill.style.width = ((index + 1) / bookData.length) * 100 + '%';
+      document.getElementById('prevBtn').disabled = index === 0;
+      document.getElementById('nextBtn').disabled = index === bookData.length - 1;
+      [1, 2, 3].forEach((unit) => {
+        document.getElementById('badge' + unit).classList.toggle('active', unit <= page.unit);
+      });
+      bindWords();
+    }
+
+    const sharedAudio = new Audio();
+    sharedAudio.preload = 'auto';
+    let audioPlayToken = 0;
+
+    function getAudioNotice() {
+      return document.getElementById('audioNotice');
+    }
+
+    function playAudioFile(src, fallbackText, options = {}) {
+      const token = ++audioPlayToken;
+      const audio = sharedAudio;
+      const notice = getAudioNotice();
+
+      audio.pause();
+      audio.currentTime = 0;
+      audio.onplay = null;
+      audio.onended = null;
+      audio.onerror = null;
+      audio.src = src;
+      audio.preload = 'auto';
+      audio.playbackRate = options.rate || 1;
+      currentAudio = audio;
+
+      audio.onplay = () => {
+        if (token !== audioPlayToken) return;
+        if (notice) notice.textContent = '';
+        if (options.onstart) options.onstart();
+      };
+      audio.onended = () => {
+        if (token !== audioPlayToken) return;
+        if (options.onend) options.onend();
+      };
+      audio.onerror = () => {
+        if (token !== audioPlayToken) return;
+        if (notice) notice.textContent = '固定音频暂时无法播放，请检查音频文件是否已接入。';
+        if (options.onerror) options.onerror();
+      };
+
+      const playPromise = audio.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch((error) => {
+          if (token !== audioPlayToken || (error && error.name === 'AbortError')) return;
+          if (notice) notice.textContent = error && error.name === 'NotAllowedError'
+              ? '浏览器暂未允许播放，请再点一次朗读或单词按钮。'
+              : '固定音频暂时无法播放，请检查音频文件是否已接入。';
+          if (options.onerror) options.onerror();
+        });
+      }
+      return playPromise;
+    }
+
+    function sentenceAudioPath(index) {
+      return 'assets/audio/sentences/page-' + String(index).padStart(2, '0') + '.mp3';
+    }
+
+    function wordAudioPath(word) {
+      return 'assets/audio/words/' + normalizeWord(word) + '.mp3?v=1';
+    }
+
+    function showTooltip(target, wordKey) {
+      const item = getDictionaryItem(wordKey) || { phonetic: '/' + (target.dataset.speak || target.textContent || wordKey) + '/', translation: '普通词' };
+      document.getElementById('phonetic').textContent = item.phonetic;
+      document.getElementById('tooltipTranslation').textContent = item.translation;
+      const rect = target.getBoundingClientRect();
+      tooltip.style.left = `${rect.left + rect.width / 2}px`;
+      tooltip.style.top = `${rect.top - 8}px`;
+      tooltip.classList.add('show');
+      clearTimeout(showTooltip.timer);
+      showTooltip.timer = setTimeout(() => tooltip.classList.remove('show'), 2600);
+    }
+
+    function getCardData(wordKey) {
+      const item = getDictionaryItem(wordKey);
+      if (!item || !item.cardId) return null;
+      return cardById[item.cardId] || null;
+    }
+
+    function showCard(card) {
+      if (!card) return false;
+      tooltip.classList.remove('show');
+      document.getElementById('cardWord').textContent = card.word;
+      document.getElementById('cardMemory').textContent = card.memory;
+      document.getElementById('cardPhonetic').textContent = card.phonetic;
+      document.getElementById('cardMeaning').textContent = card.meaning;
+      document.getElementById('cardMatch').innerHTML = `<strong>搭配：</strong>${card.match}`;
+      document.getElementById('cardExample').innerHTML = `<strong>例句：</strong>${card.example}`;
+      document.getElementById('cardNote').innerHTML = `<strong>记忆：</strong>${card.note}`;
+      document.getElementById('wordCardOverlay').classList.add('show');
+      document.getElementById('cardListenBtn').dataset.speak = card.speak;
+      document.getElementById('cardListenBtn').dataset.audio = wordAudioPath(card.speak);
+      return true;
+    }
+
+    function showWordCard(wordKey) {
+      const card = getCardData(wordKey);
+      return showCard(card);
+    }
+
+    function renderCoreWords() {
+      document.getElementById('coreTitle').textContent = `核心词汇（${coreCards.length} 个）`;
+      coreList.innerHTML = coreCards.map((card) =>
+        `<button class="core-chip" data-card-id="${card.id}">${card.word}</button>`
+      ).join('');
+      coreList.querySelectorAll('.core-chip').forEach((chip) => {
+        chip.addEventListener('click', () => showCard(cardById[chip.dataset.cardId]));
+      });
+    }
+
+    function bindWords() {
+      document.querySelectorAll('.word').forEach((wordEl) => {
+        const handler = () => {
+          const wordKey = wordEl.dataset.word;
+          const audioKey = wordEl.dataset.audio || wordKey;
+          playAudioFile(wordAudioPath(audioKey), wordEl.dataset.speak, { rate: 0.8 });
+          if (!showWordCard(wordKey)) {
+            showTooltip(wordEl, wordKey);
+          }
+        };
+        wordEl.addEventListener('click', handler);
+        wordEl.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            handler();
+          }
+        });
+      });
+    }
+
+    function readCurrentPage() {
+      if (isReading) {
+        stopAllAudio();
+        return;
+      }
+      playAudioFile(sentenceAudioPath(currentPage), bookData[currentPage].en, {
+        rate: 0.85,
+        onstart: () => {
+          isReading = true;
+          document.getElementById('readPageBtn').textContent = '停止朗读';
+        },
+        onend: () => {
+          isReading = false;
+          document.getElementById('readPageBtn').textContent = '朗读本页';
+        },
+        onerror: () => {
+          isReading = false;
+          document.getElementById('readPageBtn').textContent = '朗读本页';
+        }
+      });
+    }
+
+    function readAllPages() {
+      if (readAllMode) {
+        stopAllAudio();
+        return;
+      }
+      readAllMode = true;
+      document.getElementById('readAllBtn').textContent = '停止全文';
+      readPageInSequence(0);
+    }
+
+    function readPageInSequence(index) {
+      if (!readAllMode || index >= bookData.length) {
+        readAllMode = false;
+        document.getElementById('readAllBtn').textContent = '全文朗读';
+        return;
+      }
+      currentPage = index;
+      renderPage(currentPage);
+      playAudioFile(sentenceAudioPath(index), bookData[index].en, {
+        rate: 0.85,
+        onend: () => setTimeout(() => readPageInSequence(index + 1), 900),
+        onerror: () => {
+          readAllMode = false;
+          document.getElementById('readAllBtn').textContent = '全文朗读';
+        }
+      });
+    }
+
+    function stopAllAudio() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+      if (recognition && isRecording) recognition.stop();
+      isReading = false;
+      readAllMode = false;
+      isRecording = false;
+      document.getElementById('readPageBtn').textContent = '朗读本页';
+      document.getElementById('readAllBtn').textContent = '全文朗读';
+      document.getElementById('readingMode').classList.remove('active');
+    }
+
+    function toggleTranslation() {
+      translationVisible = !translationVisible;
+      translationEl.classList.toggle('hidden', !translationVisible);
+      document.getElementById('toggleTransBtn').textContent = translationVisible ? '隐藏中文' : '显示中文';
+    }
+
+    function initRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) return null;
+      const instance = new SpeechRecognition();
+      instance.lang = 'en-US';
+      instance.continuous = false;
+      instance.interimResults = false;
+      return instance;
+    }
+
+    function similarity(a, b) {
+      const aw = a.toLowerCase().replace(/[^a-z\s']/g, '').split(/\s+/).filter(Boolean);
+      const bw = b.toLowerCase().replace(/[^a-z\s']/g, '').split(/\s+/).filter(Boolean);
+      if (!aw.length) return 0;
+      let hits = 0;
+      aw.forEach((word) => { if (bw.includes(word)) hits += 1; });
+      return Math.round((hits / aw.length) * 100);
+    }
+
+    function showFollowHelp(feedback, target, reason) {
+      feedback.innerHTML = `<li>${reason}</li><li>安卓/鸿蒙 Edge 可能不支持网页原生跟读识别。可以换 Android Chrome 试试，或继续使用点读和朗读。</li><li>目标句：${target}</li>`;
+    }
+
+    function startFollowReading() {
+      stopAllAudio();
+      const panel = document.getElementById('readingMode');
+      const status = document.getElementById('readingStatus');
+      const score = document.getElementById('scoreDisplay');
+      const stars = document.getElementById('starsDisplay');
+      const feedback = document.getElementById('feedbackList');
+      const target = bookData[currentPage].en;
+      panel.classList.add('active');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      score.textContent = '';
+      stars.textContent = '';
+      feedback.innerHTML = '';
+
+      recognition = recognition || initRecognition();
+      if (!recognition) {
+        status.textContent = '当前浏览器不支持自动跟读识别。';
+        showFollowHelp(feedback, target, '这个浏览器没有开放 SpeechRecognition 语音识别接口，所以点击后不能自动打分。');
+        return;
+      }
+
+      let gotResult = false;
+      status.textContent = '正在启动麦克风，请允许浏览器使用麦克风后朗读本页英文。';
+      document.getElementById('followReadBtn').textContent = '正在跟读';
+      isRecording = true;
+      recognition.onresult = (event) => {
+        gotResult = true;
+        const spoken = event.results[0][0].transcript;
+        const result = similarity(target, spoken);
+        status.textContent = `识别结果：${spoken}`;
+        score.textContent = `本页跟读匹配度：${result} 分`;
+        stars.textContent = result >= 90 ? '★★★★★' : result >= 75 ? '★★★★☆' : result >= 55 ? '★★★☆☆' : '★★☆☆☆';
+        feedback.innerHTML = `<li>目标句：${target}</li><li>你读到：${spoken}</li><li>可以点击上面的英文单词逐个听读，再试一次。</li>`;
+        isRecording = false;
+        document.getElementById('followReadBtn').textContent = '跟读模式';
+      };
+      recognition.onerror = (event) => {
+        const errorName = event && event.error ? event.error : 'unknown';
+        status.textContent = '跟读识别没有启动成功。';
+        showFollowHelp(feedback, target, `错误类型：${errorName}。请检查麦克风权限；如果是安卓/鸿蒙 Edge，通常是浏览器不支持网页语音识别。`);
+        isRecording = false;
+        document.getElementById('followReadBtn').textContent = '跟读模式';
+      };
+      recognition.onend = () => {
+        isRecording = false;
+        document.getElementById('followReadBtn').textContent = '跟读模式';
+        if (!gotResult && status.textContent === '正在启动麦克风，请允许浏览器使用麦克风后朗读本页英文。') {
+          status.textContent = '没有收到跟读识别结果。';
+          showFollowHelp(feedback, target, '浏览器结束了语音识别，但没有返回文字。请确认麦克风权限，或换 Android Chrome / iPhone Safari 试试。');
+        }
+      };
+      try {
+        recognition.start();
+      } catch (error) {
+        status.textContent = '跟读识别启动失败。';
+        showFollowHelp(feedback, target, `浏览器拒绝启动语音识别：${error && error.message ? error.message : '未知错误'}。`);
+        isRecording = false;
+        document.getElementById('followReadBtn').textContent = '跟读模式';
+      }
+    }
+
+    async function initBook() {
+      const embedded = document.getElementById('bookDataJson');
+      if (embedded && embedded.textContent.trim()) {
+        book = JSON.parse(embedded.textContent);
+      } else {
+        const response = await fetch('book-data.json');
+        book = await response.json();
+      }
+      bookData = book.pages;
+      dictionary = book.dictionary || {};
+      coreCards = book.coreCards || [];
+      cardById = Object.fromEntries(coreCards.map((card) => [card.id, card]));
+      document.title = `${book.title} - 互动点读绘本`;
+      document.getElementById('bookTitle').textContent = book.title;
+      (book.units || []).forEach((unit, index) => {
+        const el = document.getElementById(`badgeTitle${index + 1}`);
+        if (el) el.innerHTML = unit.replace(/ /g, '<br>');
+      });
+      renderCoreWords();
+      renderPage(currentPage);
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentPage > 0) {
+        stopAllAudio();
+        currentPage -= 1;
+        renderPage(currentPage);
+      }
+    });
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentPage < bookData.length - 1) {
+        stopAllAudio();
+        currentPage += 1;
+        renderPage(currentPage);
+      }
+    });
+    document.getElementById('readPageBtn').addEventListener('click', readCurrentPage);
+    document.getElementById('readAllBtn').addEventListener('click', readAllPages);
+    document.getElementById('toggleTransBtn').addEventListener('click', toggleTranslation);
+    document.getElementById('followReadBtn').addEventListener('click', startFollowReading);
+    document.getElementById('cardListenBtn').addEventListener('click', () => {
+      const text = document.getElementById('cardListenBtn').dataset.speak || '';
+      const audio = document.getElementById('cardListenBtn').dataset.audio || '';
+      playAudioFile(audio, text, { rate: 0.8 });
+    });
+    document.getElementById('cardCloseBtn').addEventListener('click', () => {
+      document.getElementById('wordCardOverlay').classList.remove('show');
+      stopAllAudio();
+    });
+    document.getElementById('wordCardOverlay').addEventListener('click', (event) => {
+      if (event.target.id === 'wordCardOverlay') {
+        document.getElementById('wordCardOverlay').classList.remove('show');
+        stopAllAudio();
+      }
+    });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stopAllAudio(); });
+    initBook();
+  </script>
+</body>
+</html>
