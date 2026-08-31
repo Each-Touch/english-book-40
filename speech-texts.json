@@ -1,84 +1,184 @@
 {
-  "voice": "adult male | teacher clear",
-  "reference": "12-adult-male-teacher-clear.wav",
-  "cfg_value": 1.35,
-  "inference_timesteps": 12,
+  "voice": "温暖自然英式女老师｜IndexTTS2.5 慢速教学",
+  "reference": "/Users/zhaozixu/Applications/IndexTTS-2.5/presets/british_teacher/reference_slow.wav",
+  "cfg_value": 1.6,
+  "inference_timesteps": 10,
   "normalize": false,
   "pages": [
     {
       "page": 0,
       "visible": "New Technologies in China",
-      "speech": "New Technologies in China"
+      "speech": "New Technologies in China",
+      "file": "sentences/page-00.mp3",
+      "duration_seconds": 4.516,
+      "raw_duration_seconds": 2.4,
+      "asr": "new technologies in China.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 1,
       "visible": "Ethan is a member of the science club.",
-      "speech": "Ethan is a member of the science club."
+      "speech": "Ethan is a member of the science club.",
+      "file": "sentences/page-01.mp3",
+      "duration_seconds": 4.284,
+      "raw_duration_seconds": 2.56,
+      "asr": "Ethan is a member of the Science Club.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 2,
       "visible": "He has great knowledge about new technologies in China.",
-      "speech": "He has great knowledge about new technologies in China."
+      "speech": "He has great knowledge about new technologies in China.",
+      "file": "sentences/page-02.mp3",
+      "duration_seconds": 6.548,
+      "raw_duration_seconds": 3.52,
+      "asr": "He has great knowledge about new technologies in China.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 3,
       "visible": "Shared bikes are becoming popular.",
-      "speech": "Shared bikes are becoming popular."
+      "speech": "Shared bikes are becoming popular.",
+      "file": "sentences/page-03.mp3",
+      "duration_seconds": 4.284,
+      "raw_duration_seconds": 2.56,
+      "asr": "Shared bikes are becoming popular.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 4,
       "visible": "They are bringing cycling back to people's lives and are making people more active.",
-      "speech": "They are bringing cycling back to people's lives and are making people more active."
+      "speech": "They are bringing cycling back to people's lives and are making people more active.",
+      "file": "sentences/page-04.mp3",
+      "duration_seconds": 8.104,
+      "raw_duration_seconds": 4.64,
+      "asr": "They are bringing cycling back to people's lives and are making people more active.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 5,
       "visible": "My wallet is no longer used.",
-      "speech": "My wallet is no longer used."
+      "speech": "My wallet is no longer used.",
+      "file": "sentences/page-05.mp3",
+      "duration_seconds": 4.191,
+      "raw_duration_seconds": 2.4,
+      "asr": "My wallet is no longer used.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 6,
       "visible": "I don't need to carry money anymore.",
-      "speech": "I don't need to carry money anymore."
+      "speech": "I don't need to carry money anymore.",
+      "file": "sentences/page-06.mp3",
+      "duration_seconds": 4.098,
+      "raw_duration_seconds": 2.4,
+      "asr": "I don't need to carry money anymore.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 7,
       "visible": "I can buy whatever I want with my mobile phone as long as there is the Internet.",
-      "speech": "I can buy whatever I want with my mobile phone as long as there is the Internet."
+      "speech": "I can buy whatever I want with my mobile phone as long as there is the Internet.",
+      "file": "sentences/page-07.mp3",
+      "duration_seconds": 8.197,
+      "raw_duration_seconds": 4.48,
+      "asr": "I can buy whatever I want with my mobile phone as long as there is the internet.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 8,
       "visible": "All I need to do is scan a store's QR code and pay.",
-      "speech": "All I need to do is scan a store's QR code and pay."
+      "speech": "All I need to do is scan a store's QR code and pay.",
+      "file": "sentences/page-08.mp3",
+      "duration_seconds": 6.641,
+      "raw_duration_seconds": 3.52,
+      "asr": "All I need to do is scan a store's QR code and pay.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 9,
       "visible": "Almost everyone who sells things is using Alipay.",
-      "speech": "Almost everyone who sells things is using Alipay."
+      "speech": "Almost everyone who sells things is using Alipay.",
+      "file": "sentences/page-09.mp3",
+      "duration_seconds": 6.258,
+      "raw_duration_seconds": 3.36,
+      "asr": "almost everyone who sells things is using Alipay.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 10,
       "visible": "I don't need to go out and spend a lot of time seeking things I want.",
-      "speech": "I don't need to go out and spend a lot of time seeking things I want."
+      "speech": "I don't need to go out and spend a lot of time seeking things I want.",
+      "file": "sentences/page-10.mp3",
+      "duration_seconds": 7.256,
+      "raw_duration_seconds": 3.68,
+      "asr": "I don't need to go out and spend a lot of time seeking things I want.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 11,
       "visible": "I can buy different kinds of things just at home.",
-      "speech": "I can buy different kinds of things just at home."
+      "speech": "I can buy different kinds of things just at home.",
+      "file": "sentences/page-11.mp3",
+      "duration_seconds": 6.304,
+      "raw_duration_seconds": 3.04,
+      "asr": "I can buy different kinds of things just at home.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 12,
       "visible": "What's more, I can buy them cheaply.",
-      "speech": "What's more, I can buy them cheaply."
+      "speech": "What's more, I can buy them cheaply.",
+      "file": "sentences/page-12.mp3",
+      "duration_seconds": 4.899,
+      "raw_duration_seconds": 2.56,
+      "asr": "What is more, I can buy them cheaply.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 13,
       "visible": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away.",
-      "speech": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away."
+      "speech": "I had an experience of travelling by Chinese high-speed railways from Beijing to Tianjin, more than 100 km away.",
+      "file": "sentences/page-13.mp3",
+      "duration_seconds": 12.388,
+      "raw_duration_seconds": 7.84,
+      "asr": "I had an experience of traveling by Chinese high-speed railways from Beijing to Tianjin, more than 100 kilometers away.",
+      "asr_exact": true,
+      "needs_manual_review": false
     },
     {
       "page": 14,
       "visible": "The journey takes only half an hour.",
-      "speech": "The journey takes only half an hour."
+      "speech": "The journey takes only half an hour.",
+      "file": "sentences/page-14.mp3",
+      "duration_seconds": 4.238,
+      "raw_duration_seconds": 2.56,
+      "asr": "The journey takes only half an hour.",
+      "asr_exact": true,
+      "needs_manual_review": false
     }
-  ]
+  ],
+  "model": "IndexTeam/IndexTTS-2.5",
+  "post_atempo": null,
+  "method": "fixed British reference cloned sentence by sentence with IndexTTS2.5; native 1.18 duration factor; strict local ASR; capped Rubber Band R3 alignment; two-pass loudness normalization",
+  "qa": {
+    "sentence_count": 15,
+    "asr_exact_count": 15,
+    "manual_review_pages": [],
+    "all_files_decode": true,
+    "checksums_verified": true
+  }
 }

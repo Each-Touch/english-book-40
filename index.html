@@ -405,7 +405,7 @@
       <div class="text-panel">
         <div id="sentence" class="sentence"></div>
         <div id="translation" class="translation"></div>
-        <div id="audioNotice" class="audio-note" aria-live="polite">已使用固定“成人男声｜老师清晰”音频；点读和朗读均使用本地音频。</div>
+        <div id="audioNotice" class="audio-note" aria-live="polite">整句使用固定慢速教学音频；点击英文单词时使用浏览器独立英式发音。</div>
       </div>
     </section>
 
@@ -499,7 +499,7 @@
         const key = normalizeWord(part);
         const item = getDictionaryItem(key);
         const cls = item && item.cardId ? 'word core-word' : 'word';
-        return '<span class="' + cls + '" tabindex="0" role="button" aria-label="点读 ' + part + '" data-word="' + key + '" data-audio="' + key + '" data-speak="' + part + '">' + part + '</span>';
+        return '<span class="' + cls + '" tabindex="0" role="button" aria-label="点读 ' + part + '" data-word="' + key + '" data-speak="' + part + '">' + part + '</span>';
       }).join('');
     }
     function setImageStatus(message) {
@@ -533,9 +533,65 @@
     const sharedAudio = new Audio();
     sharedAudio.preload = 'auto';
     let audioPlayToken = 0;
+    let browserVoices = [];
 
     function getAudioNotice() {
       return document.getElementById('audioNotice');
+    }
+
+    function stopPlaybackOnly() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+    }
+
+    function refreshBrowserVoices() {
+      if (!('speechSynthesis' in window)) return;
+      browserVoices = window.speechSynthesis.getVoices();
+    }
+
+    function chooseBritishVoice() {
+      const preferred = /serena|kate|sonia|libby|hazel|martha|susan|moira|fiona|female/i;
+      return browserVoices
+        .filter((voice) => /^en[-_]GB$/i.test(voice.lang))
+        .sort((left, right) => {
+          const score = (voice) => (preferred.test(voice.name) ? 20 : 0) + (voice.localService ? 2 : 0);
+          return score(right) - score(left);
+        })[0] || null;
+    }
+
+    function stopBrowserSpeech() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      currentUtterance = null;
+    }
+
+    function playWordSpeech(text) {
+      const notice = getAudioNotice();
+      stopPlaybackOnly();
+      audioPlayToken += 1;
+      if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+        if (notice) notice.textContent = '当前浏览器没有提供单词朗读功能，请换用 Chrome、Edge 或 Safari。';
+        return;
+      }
+      stopBrowserSpeech();
+      refreshBrowserVoices();
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voice = chooseBritishVoice();
+      utterance.lang = 'en-GB';
+      if (voice) utterance.voice = voice;
+      utterance.rate = 0.72;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+      utterance.onstart = () => { if (notice) notice.textContent = ''; };
+      utterance.onend = () => { if (currentUtterance === utterance) currentUtterance = null; };
+      utterance.onerror = () => {
+        if (currentUtterance === utterance) currentUtterance = null;
+        if (notice) notice.textContent = '浏览器单词发音没有成功，请再点一次。';
+      };
+      currentUtterance = utterance;
+      window.speechSynthesis.speak(utterance);
     }
 
     function playAudioFile(src, fallbackText, options = {}) {
@@ -543,6 +599,7 @@
       const audio = sharedAudio;
       const notice = getAudioNotice();
 
+      stopBrowserSpeech();
       audio.pause();
       audio.currentTime = 0;
       audio.onplay = null;
@@ -582,12 +639,9 @@
     }
 
     function sentenceAudioPath(index) {
-      return 'assets/audio/sentences/page-' + String(index).padStart(2, '0') + '.mp3';
+      return 'assets/audio/sentences/page-' + String(index).padStart(2, '0') + '.mp3?v=5';
     }
 
-    function wordAudioPath(word) {
-      return 'assets/audio/words/' + normalizeWord(word) + '.mp3?v=1';
-    }
 
     function showTooltip(target, wordKey) {
       const item = getDictionaryItem(wordKey) || { phonetic: '/' + (target.dataset.speak || target.textContent || wordKey) + '/', translation: '普通词' };
@@ -619,7 +673,6 @@
       document.getElementById('cardNote').innerHTML = `<strong>记忆：</strong>${card.note}`;
       document.getElementById('wordCardOverlay').classList.add('show');
       document.getElementById('cardListenBtn').dataset.speak = card.speak;
-      document.getElementById('cardListenBtn').dataset.audio = wordAudioPath(card.speak);
       return true;
     }
 
@@ -642,8 +695,7 @@
       document.querySelectorAll('.word').forEach((wordEl) => {
         const handler = () => {
           const wordKey = wordEl.dataset.word;
-          const audioKey = wordEl.dataset.audio || wordKey;
-          playAudioFile(wordAudioPath(audioKey), wordEl.dataset.speak, { rate: 0.8 });
+          playWordSpeech(wordEl.dataset.speak || wordEl.textContent || wordKey);
           if (!showWordCard(wordKey)) {
             showTooltip(wordEl, wordKey);
           }
@@ -664,7 +716,7 @@
         return;
       }
       playAudioFile(sentenceAudioPath(currentPage), bookData[currentPage].en, {
-        rate: 0.85,
+        rate: 1,
         onstart: () => {
           isReading = true;
           document.getElementById('readPageBtn').textContent = '停止朗读';
@@ -699,7 +751,7 @@
       currentPage = index;
       renderPage(currentPage);
       playAudioFile(sentenceAudioPath(index), bookData[index].en, {
-        rate: 0.85,
+        rate: 1,
         onend: () => setTimeout(() => readPageInSequence(index + 1), 900),
         onerror: () => {
           readAllMode = false;
@@ -709,6 +761,7 @@
     }
 
     function stopAllAudio() {
+      stopBrowserSpeech();
       if (currentAudio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
@@ -855,8 +908,7 @@
     document.getElementById('followReadBtn').addEventListener('click', startFollowReading);
     document.getElementById('cardListenBtn').addEventListener('click', () => {
       const text = document.getElementById('cardListenBtn').dataset.speak || '';
-      const audio = document.getElementById('cardListenBtn').dataset.audio || '';
-      playAudioFile(audio, text, { rate: 0.8 });
+      playWordSpeech(text);
     });
     document.getElementById('cardCloseBtn').addEventListener('click', () => {
       document.getElementById('wordCardOverlay').classList.remove('show');
@@ -869,6 +921,10 @@
       }
     });
     document.addEventListener('visibilitychange', () => { if (document.hidden) stopAllAudio(); });
+    if ('speechSynthesis' in window) {
+      refreshBrowserVoices();
+      window.speechSynthesis.addEventListener('voiceschanged', refreshBrowserVoices);
+    }
     initBook();
   </script>
 </body>
